@@ -11,11 +11,11 @@ export default class extends Controller {
 
     function success(pos) {
       const crd = pos.coords;
-      const lon = crd.longitude;
-      const lat = crd.latitude;
+      const longitude = crd.longitude;
+      const latitude = crd.latitude;
       var element = document.getElementById("weather");
 
-      fetch(`/?lat=${lat}&lon=${lon}`, {
+      fetch(`/?lat=${latitude}&lon=${longitude}`, {
         contentType: 'application/json',
         hearders: 'application/json'
       })
