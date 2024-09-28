@@ -1,6 +1,7 @@
 class FetchWeatherDataService < ApplicationService
-  def initialize(query)
-    @query = query
+  def initialize(city, state)
+    @city = city
+    @state = state
   end
 
   def call
@@ -12,7 +13,11 @@ class FetchWeatherDataService < ApplicationService
   private
 
   def cached_forecast
-    @cached_forecast ||= WeatherForecast.find_by_search_keyword(@query)
+    @cached_forecast ||= WeatherForecast.find_by_hashed_query_params(hashed_query_params)
+  end
+
+  def hashed_query_params
+    Digest::MD5.hexdigest(@city+@state)
   end
 
   # cache will be busted if the cached forecast is expired
@@ -28,6 +33,6 @@ class FetchWeatherDataService < ApplicationService
   end
 
   def create_weather_forecast
-    CreateWeatherForecastService.call(@query) || NilWeatherForecast.new(@query)
+    CreateWeatherForecastService.call(@city, @state) || NilWeatherForecast.new(@city, @state)
   end
 end

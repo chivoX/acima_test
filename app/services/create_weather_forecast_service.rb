@@ -1,6 +1,7 @@
 class CreateWeatherForecastService < ApplicationService
-  def initialize(query)
-    @query = query
+  def initialize(city, state)
+    @city = city
+    @state = state
   end
 
   def call
@@ -14,7 +15,7 @@ class CreateWeatherForecastService < ApplicationService
   private
 
   def geolocation_query
-    @coordinates = GeocodingService.call(@query)
+    @coordinates = GeocodingService.call(@city, @state)
   end
 
   def fetch_weather_data
@@ -23,7 +24,7 @@ class CreateWeatherForecastService < ApplicationService
 
   def create_weather_forecast
     WeatherForecast.create(
-      search_keyword: @query,
+      hashed_query_params: Digest::MD5.hexdigest(@city+@state),
       response: @weather_data,
       ttl: ENV["TTL"]
     )

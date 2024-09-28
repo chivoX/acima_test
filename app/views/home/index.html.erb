@@ -2,7 +2,8 @@
   Stimulus
 </div>
 <div data-controller="fetch-weather-by-name" class="flex flex-col space-y-4 xl:space-y-0 xl:flex-row xl:items-center xl:space-x-3">
-  <input type="text" placeholder="Search" data-fetch-weather-by-name-target="query">
+  <input type="text" placeholder="Search" data-fetch-weather-by-name-target="city">
+  <%= select_tag :state, options_for_select(us_states), data: {"fetch-weather-by-name-target": "state"} %>
   <button data-action="click->fetch-weather-by-name#fetchWeather">
     Submit
   </button>

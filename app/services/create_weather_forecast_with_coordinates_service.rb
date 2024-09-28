@@ -18,8 +18,7 @@ class CreateWeatherForecastWithCoordinatesService < ApplicationService
 
   def create_weather_forecast
     WeatherForecast.create(
-      search_keyword: @weather_data["name"],
-      hashed_coordinates: Digest::MD5.hexdigest(@lat+@lon),
+      hashed_query_params: Digest::MD5.hexdigest(@lat+@lon),
       response: @weather_data,
       ttl: ENV["TTL"]
     )

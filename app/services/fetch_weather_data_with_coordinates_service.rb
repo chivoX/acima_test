@@ -13,10 +13,10 @@ class FetchWeatherDataWithCoordinatesService < ApplicationService
   private
 
   def cached_forecast
-    @cached_forecast ||= WeatherForecast.find_by_hashed_coordinates(hashed_coordinates)
+    @cached_forecast ||= WeatherForecast.find_by_hashed_query_params(hashed_query_params)
   end
 
-  def hashed_coordinates
+  def hashed_query_params
     Digest::MD5.hexdigest(@lat+@lon)
   end
 
@@ -33,6 +33,6 @@ class FetchWeatherDataWithCoordinatesService < ApplicationService
   end
 
   def create_weather_forecast
-    CreateWeatherForecastWithCoordinatesService.call(@lat, @lon) || NilWeatherForecast.new(hashed_coordinates)
+    CreateWeatherForecastWithCoordinatesService.call(@lat, @lon) || NilWeatherForecast.new(hashed_query_params)
   end
 end

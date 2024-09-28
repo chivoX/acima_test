@@ -10,18 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_09_28_130403) do
+ActiveRecord::Schema[7.2].define(version: 2024_09_28_152131) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "weather_forecasts", force: :cascade do |t|
-    t.string "search_keyword"
     t.jsonb "response"
     t.integer "ttl"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "hashed_coordinates"
-    t.index ["hashed_coordinates"], name: "index_weather_forecasts_on_hashed_coordinates"
-    t.index ["search_keyword"], name: "index_weather_forecasts_on_search_keyword"
+    t.string "hashed_query_params"
+    t.index ["hashed_query_params"], name: "index_weather_forecasts_on_hashed_query_params"
   end
 end

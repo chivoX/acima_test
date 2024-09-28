@@ -1,11 +1,12 @@
 class GeocodingService < ApplicationService
-  def initialize(name)
-    @name = name
+  def initialize(city, state)
+    @city = city
+    @state = state
   end
 
   def call
     begin
-      response = Excon.get("http://api.openweathermap.org/geo/1.0/direct?q=#{@name}&limit=1&appid=#{api_key}")
+      response = Excon.get("http://api.openweathermap.org/geo/1.0/direct?q=#{@city},#{@state},US&limit=1&appid=#{api_key}")
     rescue Excon::Error
       return false
     end
