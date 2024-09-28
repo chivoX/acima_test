@@ -4,6 +4,9 @@
 
 import { application } from "./application"
 
+import FetchWeatherByNameController from "./fetch_weather_by_name_controller"
+application.register("fetch-weather-by-name", FetchWeatherByNameController)
+
 import HelloController from "./hello_controller"
 application.register("hello", HelloController)
 
