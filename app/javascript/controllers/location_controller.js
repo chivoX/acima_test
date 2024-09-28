@@ -21,7 +21,7 @@ export default class extends Controller {
       })
       .then((response) => response.text())
       .then(res => {
-        element.innerHTML(res)
+        element.innerHTML = res;
       })
     }
 
