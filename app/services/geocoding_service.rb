@@ -14,7 +14,7 @@ class GeocodingService < ApplicationService
     end
     parsed_data = JSON.parse(response.body)
 
-    result = { lat: parsed_data[0]["lat"], lon: parsed_data[0]["lon"] }
+    result = { latitude: parsed_data[0]["lat"], longitude: parsed_data[0]["lon"] }
 
     ServiceResult.new(true, result, nil)
   end

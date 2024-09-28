@@ -39,6 +39,6 @@ class FetchWeatherDataService < ApplicationService
   end
 
   def create_weather_forecast
-    CreateWeatherForecastService.call(@city, @state) || NilWeatherForecast.new(hashed_query_params)
+    WeatherForecastService::Create.call(@city, @state) || NilWeatherForecast.new(hashed_query_params)
   end
 end

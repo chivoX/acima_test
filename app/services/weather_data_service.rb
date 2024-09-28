@@ -1,14 +1,14 @@
 # frozen_string_literal: true
 
 class WeatherDataService < ApplicationService
-  def initialize(lat, lon)
-    @lat = lat
-    @lon = lon
+  def initialize(latitude, longitude)
+    @latitude = latitude
+    @longitude = longitude
   end
 
   def call
     begin
-      response = Excon.get("https://api.openweathermap.org/data/2.5/weather?lat=#{@lat}&lon=#{@lon}&appid=#{api_key}")
+      response = Excon.get("https://api.openweathermap.org/data/2.5/weather?lat=#{@latitude}&lon=#{@longitude}&appid=#{api_key}")
     rescue Excon::Error
       return ServiceResult.new(false, nil, Excon::Error)
     end

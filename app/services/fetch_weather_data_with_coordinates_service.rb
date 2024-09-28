@@ -39,6 +39,6 @@ class FetchWeatherDataWithCoordinatesService < ApplicationService
   end
 
   def create_weather_forecast
-    CreateWeatherForecastWithCoordinatesService.call(@latitude, @longitude) || NilWeatherForecast.new(hashed_query_params)
+    WeatherForecastService::CreateWithCoordinates.call(@latitude, @longitude) || NilWeatherForecast.new(hashed_query_params)
   end
 end
