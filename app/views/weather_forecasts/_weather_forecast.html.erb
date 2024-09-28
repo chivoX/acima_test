@@ -1,1 +1,19 @@
 THIS IS A TEST FORECAST
+<div>
+  Forecast for: <%= weather_forecast.response["name"] %>
+</div>
+<div>
+  Current Forecast: <%= weather_forecast.response["weather"][0]["main"] %>
+</div>
+<div>
+  Description: <%= weather_forecast.response["weather"][0]["description"] %>
+</div>
+<div>
+  Temperature: <%= weather_forecast.response["main"]["temp"] %>
+</div>
+<div>
+  Minimum: <%= weather_forecast.response["main"]["temp_min"] %>
+</div>
+<div>
+  Minimum: <%= weather_forecast.response["main"]["temp_max"] %>
+</div>

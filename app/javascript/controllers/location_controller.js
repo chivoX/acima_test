@@ -29,9 +29,6 @@ export default class extends Controller {
       console.warn(`ERROR(${err.code}): ${err.message}`);
     }
 
-    function search() {
-    }
-
     navigator.geolocation.getCurrentPosition(success, error, options);
 
   }
