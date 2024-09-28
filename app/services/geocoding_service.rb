@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class GeocodingService < ApplicationService
   def initialize(city, state)
     @city = city

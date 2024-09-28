@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 class CreateWeatherForecastWithCoordinatesService < ApplicationService
-  def initialize(lat, lon)
-    @lat = lat
-    @lon = lon
+  def initialize(latitude, longitude)
+    @latitude = latitude
+    @longitude = longitude
   end
 
   def call
@@ -13,12 +15,12 @@ class CreateWeatherForecastWithCoordinatesService < ApplicationService
   private
 
   def fetch_weather_data
-    @weather_data_results = WeatherDataService.call(@lat, @lon)
+    @weather_data_results = WeatherDataService.call(@latitude, @longitude)
   end
 
   def create_weather_forecast
     WeatherForecast.create(
-      hashed_query_params: Digest::MD5.hexdigest(@lat+@lon),
+      hashed_query_params: Digest::MD5.hexdigest(@latitude+@longitude),
       response: @weather_data_results.result,
       ttl: ENV["TTL"]
     )

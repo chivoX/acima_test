@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 class FetchWeatherDataWithCoordinatesService < ApplicationService
-  def initialize(lat, lon)
-    @lat = lat
-    @lon = lon
+  def initialize(latitude, longitude)
+    @latitude = latitude
+    @longitude = longitude
   end
 
   # cheking first if cache is expired to bust it
@@ -21,7 +23,7 @@ class FetchWeatherDataWithCoordinatesService < ApplicationService
 
   # hashed lat + lon to be used to see if already exists in the db
   def hashed_query_params
-    Digest::MD5.hexdigest(@lat+@lon)
+    Digest::MD5.hexdigest(@latitude+@longitude)
   end
 
   # cache will be busted if the cached forecast is expired
@@ -37,6 +39,6 @@ class FetchWeatherDataWithCoordinatesService < ApplicationService
   end
 
   def create_weather_forecast
-    CreateWeatherForecastWithCoordinatesService.call(@lat, @lon) || NilWeatherForecast.new(hashed_query_params)
+    CreateWeatherForecastWithCoordinatesService.call(@latitude, @longitude) || NilWeatherForecast.new(hashed_query_params)
   end
 end

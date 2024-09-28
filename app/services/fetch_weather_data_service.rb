@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class FetchWeatherDataService < ApplicationService
   def initialize(city, state)
     @city = city

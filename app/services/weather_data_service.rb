@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class WeatherDataService < ApplicationService
   def initialize(lat, lon)
     @lat = lat
