@@ -1,4 +1,4 @@
-NilWeatherForecast = Struct.new(:search_keyword) do
+NilWeatherForecast = Struct.new(:hashed_query_params) do
   def ttl
     0
   end

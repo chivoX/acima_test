@@ -8,9 +8,12 @@ class WeatherDataService < ApplicationService
     begin
       response = Excon.get("https://api.openweathermap.org/data/2.5/weather?lat=#{@lat}&lon=#{@lon}&appid=#{api_key}")
     rescue Excon::Error
-      return false
+      return ServiceResult.new(false, nil, Excon::Error)
     end
-    JSON.parse(response.body)
+
+    result = JSON.parse(response.body)
+
+    ServiceResult.new(true, result, nil)
   end
 
   private

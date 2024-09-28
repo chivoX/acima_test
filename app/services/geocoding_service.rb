@@ -8,11 +8,13 @@ class GeocodingService < ApplicationService
     begin
       response = Excon.get("http://api.openweathermap.org/geo/1.0/direct?q=#{@city},#{@state},US&limit=1&appid=#{api_key}")
     rescue Excon::Error
-      return false
+      return ServiceResult.new(false, nil, Excon::Error)
     end
     parsed_data = JSON.parse(response.body)
 
-    { lat: parsed_data[0]["lat"], lon: parsed_data[0]["lon"] }
+    result = { lat: parsed_data[0]["lat"], lon: parsed_data[0]["lon"] }
+
+    ServiceResult.new(true, result, nil)
   end
 
   private

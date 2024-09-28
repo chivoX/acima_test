@@ -6,26 +6,26 @@ class CreateWeatherForecastService < ApplicationService
 
   def call
     geolocation_query
-    return unless @coordinates
+    return ServiceResult.new(false, nil, "bad coordinates") unless @geocoding_results.status
     fetch_weather_data
-    return unless @weather_data
+    return ServiceResult.new(false, nil, "no geocoding data") unless @weather_data_results.status
     create_weather_forecast
   end
 
   private
 
   def geolocation_query
-    @coordinates = GeocodingService.call(@city, @state)
+    @geocoding_results = GeocodingService.call(@city, @state).results
   end
 
   def fetch_weather_data
-    @weather_data = WeatherDataService.call(@coordinates[:lat], @coordinates[:lon])
+    @weather_data_results = WeatherDataService.call(@geocoding_results[:lat], @geocoding_results[:lon]).results
   end
 
   def create_weather_forecast
     WeatherForecast.create(
       hashed_query_params: Digest::MD5.hexdigest(@city+@state),
-      response: @weather_data,
+      response: @weather_data_results.result,
       ttl: ENV["TTL"]
     )
   end

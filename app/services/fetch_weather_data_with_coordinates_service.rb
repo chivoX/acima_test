@@ -4,10 +4,13 @@ class FetchWeatherDataWithCoordinatesService < ApplicationService
     @lon = lon
   end
 
+  # cheking first if cache is expired to bust it
+  # if not expired cache is used
+  # new forecast is created if not on cache
   def call
-    return cached_forecast unless check_ttl
+    return ServiceResult.new(true, cached_forecast, nil) unless check_ttl
     bust_cache if cached_forecast
-    create_weather_forecast
+    ServiceResult.new(true, create_weather_forecast, nil)
   end
 
   private
@@ -16,6 +19,7 @@ class FetchWeatherDataWithCoordinatesService < ApplicationService
     @cached_forecast ||= WeatherForecast.find_by_hashed_query_params(hashed_query_params)
   end
 
+  # hashed lat + lon to be used to see if already exists in the db
   def hashed_query_params
     Digest::MD5.hexdigest(@lat+@lon)
   end
