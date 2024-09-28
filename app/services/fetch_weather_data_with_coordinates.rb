@@ -13,7 +13,11 @@ class FetchWeatherDataWithCoordinatesService < ApplicationService
   private
 
   def cached_forecast
-    @cached_forecast ||= WeatherForecast.find_by_search_keyword(@query)
+    @cached_forecast ||= WeatherForecast.find_by_hashed_coordinates(hashed_coordinates)
+  end
+
+  def hashed_coordinates
+    Digest::MD5.hexdigest(@lat+@lon)
   end
 
   # cache will be busted if the cached forecast is expired
@@ -29,6 +33,6 @@ class FetchWeatherDataWithCoordinatesService < ApplicationService
   end
 
   def create_weather_forecast
-    CreateWeatherForecastService.call(@query, @params) || NilWeatherForecast.new(@query, @params)
+    CreateWeatherForecastWithCoordinatesService.call(@lat, @lon) || NilWeatherForecast.new(hashed_coordinates)
   end
 end
