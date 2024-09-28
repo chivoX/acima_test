@@ -11,15 +11,25 @@ export default class extends Controller {
 
     function success(pos) {
       const crd = pos.coords;
+      const lon = crd.longitude;
+      const lat = crd.latitude;
+      var element = document.getElementById("weather");
 
-      console.log("Tu ubicación actual es:");
-      console.log(`Latitud : ${crd.latitude}`);
-      console.log(`Longitud: ${crd.longitude}`);
-      console.log(`Más o menos ${crd.accuracy} metros.`);
+      fetch(`/?lat=${lat}&lon=${lon}`, {
+        contentType: 'application/json',
+        hearders: 'application/json'
+      })
+      .then((response) => response.text())
+      .then(res => {
+        element.innerHTML(res)
+      })
     }
 
     function error(err) {
       console.warn(`ERROR(${err.code}): ${err.message}`);
+    }
+
+    function search() {
     }
 
     navigator.geolocation.getCurrentPosition(success, error, options);
