@@ -15,11 +15,11 @@ class CreateWeatherForecastService < ApplicationService
   private
 
   def geolocation_query
-    @geocoding_results = GeocodingService.call(@city, @state).results
+    @geocoding_results = GeocodingService.call(@city, @state)
   end
 
   def fetch_weather_data
-    @weather_data_results = WeatherDataService.call(@geocoding_results[:lat], @geocoding_results[:lon]).results
+    @weather_data_results = WeatherDataService.call(@geocoding_results.result[:lat], @geocoding_results.result[:lon])
   end
 
   def create_weather_forecast

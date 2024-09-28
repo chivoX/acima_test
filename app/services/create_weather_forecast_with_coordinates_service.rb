@@ -13,13 +13,13 @@ class CreateWeatherForecastWithCoordinatesService < ApplicationService
   private
 
   def fetch_weather_data
-    @weather_data_results = WeatherDataService.call(@lat, @lon).results
+    @weather_data_results = WeatherDataService.call(@lat, @lon)
   end
 
   def create_weather_forecast
     WeatherForecast.create(
       hashed_query_params: Digest::MD5.hexdigest(@lat+@lon),
-      response: @weather_data_results,
+      response: @weather_data_results.result,
       ttl: ENV["TTL"]
     )
   end
