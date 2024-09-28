@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 class FetchWeatherDataService < ApplicationService
-  def initialize(city, state)
-    @city = city
-    @state = state
+  def initialize(service, *args)
+    @klass = "WeatherForecastService::#{service.to_s.camelize}".constantize
+    @args = args
   end
 
   # cheking first if cache is expired to bust it
@@ -23,7 +23,7 @@ class FetchWeatherDataService < ApplicationService
 
   # hashed city and state to be used to see if already exists in the db
   def hashed_query_params
-    Digest::MD5.hexdigest(@city+@state)
+    Digest::MD5.hexdigest(@args[0]+@args[1])
   end
 
   # cache will be busted if the cached forecast is expired
@@ -39,6 +39,6 @@ class FetchWeatherDataService < ApplicationService
   end
 
   def create_weather_forecast
-    WeatherForecastService::Create.call(@city, @state) || NilWeatherForecast.new(hashed_query_params)
+    @klass.call(@args[0], @args[1]) || NilWeatherForecast.new(hashed_query_params)
   end
 end
