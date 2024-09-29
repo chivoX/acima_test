@@ -9,7 +9,7 @@ module WeatherForecastService
 
     def call
       geolocation_query
-      return ServiceResult.new(false, nil, "bad coordinates") unless @geocoding_results.status
+      return ServiceResult.new(false, nil, "location not found") unless @geocoding_results.status
       fetch_weather_data(@geocoding_results.result[:latitude], @geocoding_results.result[:longitude])
       return ServiceResult.new(false, nil, "no geocoding data") unless @weather_data_results.status
       hashed_query_params(@city, @state)

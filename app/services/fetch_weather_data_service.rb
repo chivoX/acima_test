@@ -39,6 +39,6 @@ class FetchWeatherDataService < ApplicationService
   end
 
   def create_weather_forecast
-    @klass.call(@args[0], @args[1]) || NilWeatherForecast.new(hashed_query_params)
+    @klass.call(@args[0], @args[1]) || ServiceResult(true, NilWeatherForecast.new(hashed_query_params), nil)
   end
 end
