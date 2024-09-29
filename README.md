@@ -1,24 +1,37 @@
-# README
+# Acima Test
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This test for acima required the following challenges to be completed:
 
-Things you may want to cover:
+## Backend
+* Implementing a weather service (I choose OpenWeatherWeatherMap.org's).
 
-* Ruby version
+* Store responses in a database and use as cache. Valid for 1 hour.
 
-* System dependencies
+## Frontend
 
-* Configuration
+* Allow location service on your browser and use your current location to look up the current weather.
 
-* Database creation
+* Display current location weather on first load.
 
-* Database initialization
+* Bonus: Provide a search for weather by City/State.
 
-* How to run the test suite
+## Configuration
 
-* Services (job queues, cache servers, search engines, etc.)
+You will need to rename .env.sample to .env and setup the database.
 
-* Deployment instructions
+```ruby
+bin/rails db:setup
 
-* ...
+```
+
+## Running the project
+
+```ruby
+bin/dev
+```
+
+## Running specs
+
+```ruby
+bin/rspec specs
+```
