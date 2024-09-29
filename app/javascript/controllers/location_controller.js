@@ -15,7 +15,7 @@ export default class extends Controller {
       const latitude = crd.latitude;
       var element = document.getElementById("weather");
 
-      fetch(`/?lat=${latitude}&lon=${longitude}`, {
+      fetch(`/?latitude=${latitude}&longitude=${longitude}`, {
         contentType: 'application/json',
         hearders: 'application/json'
       })
