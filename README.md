@@ -3,7 +3,7 @@
 This test for acima required the following challenges to be completed:
 
 ## Backend
-* Implementing a weather service (I choose OpenWeatherWeatherMap.org's).
+* Implementing a weather service (I chose OpenWeatherWeatherMap.org's).
 
 * Store responses in a database and use as cache. Valid for 1 hour.
 
@@ -100,4 +100,7 @@ WeatherForecast.count # 3 same as the scenario above
 
 ```ruby
 rspec spec
+
+Finished in 1.06 seconds (files took 1.41 seconds to load)
+27 examples, 0 failures
 ```
