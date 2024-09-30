@@ -12,6 +12,6 @@ response = { "dt"=>1727670389, "id"=>4887398, "cod"=>200, "sys"=>{ "id"=>2005153
 
 tll = 3600
 
-hashed_query_params =  "ee157dacd6892df7bef53d05d97fd84f"
+hashed_query_params =  "f3603eba59b36813cef7e2d114315458"
 
 WeatherForecast.create!(response: response, ttl: tll, hashed_query_params: hashed_query_params)
