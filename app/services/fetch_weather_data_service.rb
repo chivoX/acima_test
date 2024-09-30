@@ -13,7 +13,7 @@ class FetchWeatherDataService < ApplicationService
     return ServiceResult.new(true, cached_forecast, nil) unless check_ttl
     bust_cache if cached_forecast
     return ServiceResult.new(false, nil, create_weather_forecast.errors) unless create_weather_forecast.status
-    ServiceResult.new(true, create_weather_forecast, nil)
+    ServiceResult.new(true, create_weather_forecast.result, nil)
   end
 
   private
@@ -40,6 +40,6 @@ class FetchWeatherDataService < ApplicationService
   end
 
   def create_weather_forecast
-    @klass.call(@args[0], @args[1])
+    @create_weather_forecast ||= @klass.call(@args[0], @args[1])
   end
 end
