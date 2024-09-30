@@ -11,9 +11,12 @@ class FetchWeatherDataService < ApplicationService
   # new forecast is created if not on cache
   def call
     return ServiceResult.new(true, cached_forecast, nil) unless check_ttl
+
     bust_cache if cached_forecast
-    return ServiceResult.new(false, nil, create_weather_forecast.errors) unless create_weather_forecast.status
-    ServiceResult.new(true, create_weather_forecast.result, nil)
+    weather_forecast_response = create_weather_forecast
+    return ServiceResult.new(false, nil, weather_forecast_response.errors) unless weather_forecast_response.status
+
+    ServiceResult.new(true, weather_forecast_response.result, nil)
   end
 
   private

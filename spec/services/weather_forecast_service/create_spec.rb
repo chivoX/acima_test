@@ -31,7 +31,7 @@ RSpec.describe WeatherForecastService::Create do
     context 'failure' do
       context "with an error on geocoding service" do
         let(:geocoding_response) do
-          double(status: false)
+          double(status: false, errors: 'location not found')
         end
 
         before do

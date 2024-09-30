@@ -41,54 +41,68 @@ RSpec.describe FetchWeatherDataService do
         subject.call
       end
 
-      it 'creates a new weather forecast' do
-        expect(subject).to receive(:create_weather_forecast)
+      context "when weather_forecast_response succeeds" do
+        let(:result) { double }
+        let(:weather_forecast_response) do
+          double(status: true, result: result, errors: nil)
+        end
+        it 'creates a new weather forecast' do
+          expect(subject).to receive(:create_weather_forecast).and_return(weather_forecast_response)
 
-        subject.call
+          subject.call
+        end
+
+        it 'returns a successful response' do
+          allow(subject).to receive(:create_weather_forecast).and_return(weather_forecast_response)
+
+          response = subject.call
+
+          expect(response.status).to be true
+          expect(response.result).to eq(result)
+        end
       end
 
-      it 'returns a successful response' do
-        allow(subject).to receive(:create_weather_forecast).and_return(true)
+      context "when weather_forecast_response fails" do
+        let(:errors) { double(message: "there is an error") }
+        let(:weather_forecast_response) do
+          double(status: false, result: nil, errors: errors)
+        end
 
-        response = subject.call
+        it 'returns a failure response' do
+          allow(subject).to receive(:create_weather_forecast).and_return(weather_forecast_response)
 
-        expect(response.status).to be true
-        expect(response.result).to eq(true)
+          response = subject.call
+
+          expect(response.status).to be false
+          expect(response.errors).to eq(errors)
+        end
       end
     end
 
     context 'when there is no cached forecast' do
+      let(:result) { double }
+      let(:weather_forecast_response) do
+        double(status: true, result: result, errors: nil)
+      end
+
       before do
         allow(::WeatherForecast).to receive(:find_by_hashed_query_params).with(hashed_params).and_return(nil)
       end
 
       it 'creates a new weather forecast' do
-        expect(subject).to receive(:create_weather_forecast).and_return(true)
+        expect(subject).to receive(:create_weather_forecast).and_return(weather_forecast_response)
 
         subject.call
       end
 
       it 'returns a successful response' do
-        allow(subject).to receive(:create_weather_forecast).and_return(true)
+        allow(subject).to receive(:create_weather_forecast).and_return(weather_forecast_response)
 
         response = subject.call
 
         expect(response.status).to be true
-        expect(response.result).to eq(true)
+        expect(response.result).to eq(result)
       end
     end
-
-    # context 'when the weather service returns nil' do
-    #   before do
-    #     allow(WeatherForecast).to receive(:find_by_hashed_query_params).with(hashed_params).and_return(nil)
-    #     allow(subject).to receive(:create_weather_forecast).and_return(NilWeatherForecast.new(hashed_params))
-    #   end
-
-    #   it 'returns a NilWeatherForecast' do
-    #     result = subject.call
-    #     expect(result.success?).to be true
-    #     expect(result.data).to be_a(NilWeatherForecast)
-    #   end
-    # end
   end
 end
