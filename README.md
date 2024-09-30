@@ -79,7 +79,7 @@ WeatherForecast.count # equals 2
 3. Go to your rails console again and run the following:
 
 ```ruby
-WeatherForecast.count # equals 2
+WeatherForecast.count # equals 3
 WeatherForecast.last.response.fetch("name") # Miami
 ```
 
