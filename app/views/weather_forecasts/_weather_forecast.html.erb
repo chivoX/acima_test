@@ -1,19 +1,19 @@
 US WEATHER FORECAST
 <div>
-  Forecast for: <%= weather_forecast.response["name"] %>
+  Forecast for: <%= weather_forecast.response.fetch("name", "no name available") %>
 </div>
 <div>
-  Current Forecast: <%= weather_forecast.response["weather"][0]["main"] %>
+  Current Forecast: <%= weather_forecast.response["weather"][0].fetch("main", "no current forecast available") %>
 </div>
 <div>
-  Description: <%= weather_forecast.response["weather"][0]["description"] %>
+  Description: <%= weather_forecast.response["weather"][0].fetch("description", "no description available") %>
 </div>
 <div>
-  Temperature: <%= weather_forecast.response["main"]["temp"] %> F
+  Temperature: <%= weather_forecast.response["main"].fetch("temp", "no temperature data available") %> F
 </div>
 <div>
-  Minimum: <%= weather_forecast.response["main"]["temp_min"] %> F
+  Minimum: <%= weather_forecast.response["main"].fetch("temp_min", "no minimum temperature available") %> F
 </div>
 <div>
-  Minimum: <%= weather_forecast.response["main"]["temp_max"] %> F
+  Minimum: <%= weather_forecast.response["main"].fetch("temp_max", "no maximum temperature available") %> F
 </div>
