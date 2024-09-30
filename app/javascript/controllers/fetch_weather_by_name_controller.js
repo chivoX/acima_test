@@ -10,7 +10,7 @@ export default class extends Controller {
     const errorsElement = this.errorsTarget;
     const weather = document.getElementById("weather");
     const city = cityElement.value.toLowerCase();
-    const state = stateElement.options[stateElement.selectedIndex].value;
+    const state = stateElement.options[stateElement.selectedIndex].value.toLowerCase();
 
     fetch(`/fetch_forecast?city=${city}&state=${state}`, {
       contentType: 'application/json',
