@@ -31,7 +31,7 @@ yarn install
 
 3. Setup database
 ```ruby
-bin/rails db:setup RAILS_ENV=development
+bin/rails db:setup
 ```
 
 ## Running the project
@@ -99,7 +99,5 @@ WeatherForecast.count # 3 same as the scenario above
 ## Running specs
 
 ```ruby
-bin/rails db:setup RAILS_ENV=test
-
 rspec spec
 ```
