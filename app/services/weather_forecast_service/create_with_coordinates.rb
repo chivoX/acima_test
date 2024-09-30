@@ -11,7 +11,7 @@ module WeatherForecastService
       fetch_weather_data(@latitude, @longitude)
       return ServiceResult.new(false, nil, "bad coordinates") unless @weather_data_results.status
       hashed_query_params(@latitude, @longitude)
-      create_weather_forecast
+      ServiceResult.new(true, create_weather_forecast, nil)
     end
   end
 end

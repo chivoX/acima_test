@@ -4,7 +4,7 @@ class GeocodingService < ApplicationService
   def initialize(city, state)
     @city = city
     @state = state
-    @url = "http://api.openweathermap.org/geo/1.0/direct?q=#{@city},#{@state},US&limit=1"
+    @url = URI::Parser.new.escape("http://api.openweathermap.org/geo/1.0/direct?q=#{@city},#{@state},US&limit=1")
   end
 
   def call
