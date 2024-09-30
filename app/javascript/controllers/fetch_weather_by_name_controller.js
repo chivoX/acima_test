@@ -9,7 +9,7 @@ export default class extends Controller {
     const stateElement = this.stateTarget;
     const errorsElement = this.errorsTarget;
     const weather = document.getElementById("weather");
-    const city = cityElement.value;
+    const city = cityElement.value.toLowerCase();
     const state = stateElement.options[stateElement.selectedIndex].value;
 
     fetch(`/fetch_forecast?city=${city}&state=${state}`, {

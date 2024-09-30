@@ -4,7 +4,7 @@ RSpec.describe WeatherDataService do
   let(:latitude) { 40.7128 }
   let(:longitude) { -74.0060 }
   let(:service) { described_class.new(latitude, longitude) }
-  let(:api_url) { "https://api.openweathermap.org/data/2.5/weather?lat=#{latitude}&lon=#{longitude}" }
+  let(:api_url) { "https://api.openweathermap.org/data/2.5/weather?lat=#{latitude}&lon=#{longitude}&units=imperial" }
 
   describe '#call' do
     context 'when the API call is successful' do
